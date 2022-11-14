@@ -3,13 +3,24 @@ package com.alexa.superheroes
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.alexa.superheroes.model.Hero
+import com.alexa.superheroes.ui.theme.Shapes
 import com.alexa.superheroes.ui.theme.SuperheroesTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,7 +40,55 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Composable
+fun HeroItem(hero: Hero, modifier: Modifier = Modifier) {
+    Card(
+        modifier = Modifier.padding(16.dp),
+        elevation = 2.dp,
+    ) {
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Column {
+                Text(text = stringResource(id = hero.name), style = MaterialTheme.typography.h3)
+                Text(
+                    text = stringResource(id = hero.description),
+                    style = MaterialTheme.typography.body1
+                )
+            }
+            Spacer(modifier = Modifier.padding(16.dp))
+            Box(
+                modifier = Modifier
+                    .size(72.dp)
+                    .clip(RoundedCornerShape(8.dp))
 
+            ) {
+                Image(
+                    painter = painterResource(hero.image),
+                    contentDescription = null,
+                    alignment = Alignment.TopCenter,
+                    contentScale = ContentScale.FillWidth
+                )
+            }
+        }
+    }
+}
+
+@Preview(showSystemUi = false)
+@Composable
+fun HeroItemPreview() {
+    SuperheroesTheme() {
+        HeroItem(
+            hero = Hero(
+                name = R.string.hero2,
+                description = R.string.description2,
+                image = R.drawable.android_superhero2
+            )
+        )
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
