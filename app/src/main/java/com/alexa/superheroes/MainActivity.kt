@@ -8,10 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +38,28 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun SuperheroApp(modifier: Modifier = Modifier) {
+    Scaffold(topBar = { TopAppBar() }) {
+        HeroList(heroes = HeroesRepository.heroes)
+    }
+}
+
+@Composable
+fun TopAppBar(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .size(56.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = stringResource(R.string.app_name),
+            style = MaterialTheme.typography.h1,
+        )
     }
 }
 
@@ -117,8 +136,8 @@ fun HeroListPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+fun AppPreview() {
     SuperheroesTheme {
-
+        SuperheroApp()
     }
 }
